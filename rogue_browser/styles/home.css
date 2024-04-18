@@ -1,0 +1,40 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+body {
+  display: grid;
+  grid-template: 1fr 3fr 1fr / 1fr;
+  width: 100%;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+header {
+  min-height: 80px;
+}
+
+footer {
+  min-height: 40px;
+}
+
+main {
+  display: grid;
+  grid-template: 480px / 1fr 640px 1fr;
+}
+
+canvas {
+  background-color: black;
+}
+
+#main-pane {
+  display: grid;
+  grid-template: repeat(30, 16px) / repeat(40, 16px);
+
+  max-height: 480px;
+  min-height: 480px;
+  max-width: 640px;
+  min-width: 640px;
+}

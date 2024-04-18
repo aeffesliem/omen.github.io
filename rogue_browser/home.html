@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Rogue Browser</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
+    <!-- styles -->
+    <link rel="stylesheet" type="text/css" href="styles/home.css">
+
+    <!-- templates -->
+
+    <!-- data modules -->
+    <script type="module" src="./data/schemas.mjs"></script>
+    <script type="module" src="./data/tiles.mjs"></script>
+
+    <!-- modules -->
+    <script type="module" src="./modules/entity.mjs"></script>
+    <script type="module" src="./modules/cartography.mjs"></script>
+
+    <!-- scripts -->
+    <script type="module" src="./scripts/home.js"></script>
+  </head>
+  <body>
+    <script>0</script>
+    <header>
+      <h2>Header</h2>
+    </header>
+    <main>
+      <aside id="left-pane">
+        <h2>Left Pane</h2>
+      </aside>
+      <section id="main-pane">
+      </section>
+      <aside id="right-pane">
+        <h2>Right Pane</h2>
+      </aside>
+    </main>
+    <footer>
+      <h2>Footer</h2>
+    </footer>
+    <script defer id="start-up" type="module">
+      import * as game from './scripts/home.js';
+
+      window.onload = () => {
+        game.initialize();
+      }
+    </script>
+  </body>
+</html>
