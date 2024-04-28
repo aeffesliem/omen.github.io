@@ -10,6 +10,73 @@
  */
 import { Tiles } from '../data/tiles.mjs';
 
+//--------------------------//
+//--- New Implementation ---//
+//--------------------------//
+/**
+ * Positions are used for when dealing in distance on the screen between cells.
+ */
+class Position {
+  #x; #y;
+
+  constructor(x = 0, y = 0) {
+    this.#x = x;
+    this.#y = y;
+  }
+
+  get x() {
+    return this.#x;
+  }
+
+  get y() {
+    return this.#y;
+  }
+
+  toString() {
+    return `(${this.#x}, ${this.#y})`;
+  }
+}
+
+/**
+ * Coordinates are used for the world, essentially where things are in relation
+ * to everything else in the world, whether or not it is on the screen. I am
+ * creating this distinction for ease of use later.
+ */
+class Coordinate {
+  #x; #y; #z;
+
+  constructor(x = 0, y = 0, z = 0) {
+    this.#x = x;
+    this.#y = y;
+    this.#z = z;
+  }
+
+  get x() {
+    return this.#x;
+  }
+
+  get y() {
+    return this.#y;
+  }
+
+  get z() {
+    return this.#z;
+  }
+
+  toString() {
+    return `(${this.#x}, ${this.#y}, ${this.#z})`;
+  }
+}
+
+class Desk {
+  constructor() {
+    
+  }
+}
+
+//--------------------//
+//--- End New Area ---//
+//--------------------//
 
 /**
  * Tiles are contained within chunks and hold either a single item in their
@@ -55,6 +122,10 @@ class Tile {
 
   get tags() {
     return Array.from(this.#tags.values());
+  }
+
+  get element() {
+    return this.#element;
   }
 
   get tenant() {

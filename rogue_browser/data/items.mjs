@@ -6,17 +6,15 @@ let Items = new Map();
 Items.set(0, {
   basic: {
     name: 'Sword',
-    id: 0,
-    amount: 1,
-    max_stack: 1,
-    portrait: 91
+    id: 10,
+    portrait: 9
   },
   detail: {
     category: 'weapon',
     subcategory: 'straight sword',
     equippable: {
       equipped: false,
-      slot: 'armaments'
+      slot: 'weapon'
     }
   },
   effects: [
@@ -34,6 +32,30 @@ Items.set(0, {
     ]
   ]
 });
+
+Items.set(1, {
+  basic: {
+    name: 'Fist',
+    id: 0,
+    portrait: 0
+  },
+  detail: {
+    category: 'weapon',
+    subcategory: 'natural',
+    equippable: {
+      equipped: false,
+      slot: 'weapon'
+    }
+  },
+  effects: [
+    [
+      'basic',
+      modifier => {
+        return Math.floor(Math.random() * 4 + 1) + modifier;
+      }
+    ]
+  ]
+})
 
 export {
   Items

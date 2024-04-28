@@ -33,7 +33,7 @@ Weapon = {
 */
 
 class Item {
-  #name; #id; #amount; #max_stack;
+  #name; #id;
   #category; #subcategory;
   #effects;
   #portrait; #position; #equippable;
@@ -41,8 +41,6 @@ class Item {
   constructor(basic = {}, detail = {}, effects = [], position) {
     this.#name      = basic.name;
     this.#id        = basic.id;
-    this.#amount    = basic.amount;
-    this.#max_stack = basic.max_stack;
     this.#portrait  = basic.portrait;
     this.#position  = position;
 
@@ -64,15 +62,6 @@ class Item {
   get id() {
     return this.#id;
   }
-
-  get amount() {
-    return this.#amount;
-  };
-
-  get max_stack() {
-    return this.#max_stack;
-  };
-
   get category() {
     return this.#category;
   }
@@ -87,6 +76,11 @@ class Item {
 
   get position() {
     return this.#position;
+  }
+
+  set position(new_position) {
+    this.#position.x = new_position.x;
+    this.#position.y = new_position.y;
   }
 
   get portrait() {

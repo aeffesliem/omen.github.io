@@ -20,9 +20,15 @@ actions.set('equip', entity => {
   }
 });
 
+actions.set('unequip', entity => {
+  return item => {
+    entity.gear.unequip(item);
+  }
+});
+
 actions.set('attack', entity => {
   return target => {
-    target.damage('Health', entity.gear.use('armaments').perform('basic')(entity.grab('Strength')));
+    target.damage('Health', entity.gear.use('weapon').perform('basic')(entity.grab('Strength')));
   }
 });
 
@@ -31,7 +37,6 @@ actions.set('use', () => {});
 actions.set('throw', () => {});
 actions.set('interact', () => {});
 actions.set('drop', () => {});
-actions.set('unequip', () => {});
 actions.set('cast', () => {});
 
 // Three types of stats: Base, Guage, and Skills
@@ -126,11 +131,39 @@ class Inventory {
 
     let subcategory = category.get(item.subcategory);
 
-    if (subcategory.has(item.name) && subcategory.get(item.name).amount < item.max_stack) {
+    if (subcategory.has(item.name)) {
       subcategory.get(item.name).amount++;
     } else {
-      subcategory.set(item.name+subcategory.size, item);
+      subcategory.set(item.name, item);
     }
+  }
+
+  grab(item_name, category = false, subcategory = false) {
+    let search = null;
+
+    if (!category && !subcategory) {
+      this.#categories.forEach(cat => {
+        cat.forEach(scat => {
+          search = scat.has(item_name) ? scat.get(item_name) : null;
+        });
+      });
+    }
+
+    if (!subcategory) {
+      for (scat in this.#categories.get(category)) {
+        search = scat.has(item_name) ? scat.get(item_name) : null;
+      }
+    }
+
+    if (!!category && !!subcategory) {
+      search = this.#categories.get(category).get(subcategory).get(item_name);
+    }
+
+    return search;
+  }
+
+  has(item) {
+    return this.#categories.get(item.category).get(item.subcategory).has(item.name);
   }
 }
 
@@ -140,9 +173,8 @@ class Gear {
   constructor() {
     this.#slots = new Map();
 
-    this.#slots.set('armaments', new Map());
-    this.#slots.set('armor',     new Map());
-    this.#slots.set('quick bar', new Set());
+    this.#slots.set('weapon', new Map());
+    this.#slots.set('armor',  new Map());
   }
 
   equip(item) {
@@ -153,8 +185,20 @@ class Gear {
     }
   }
 
+  unequip(item) {
+    if (item.equippable.equipped) {
+      let slot = this.#slots.get(item.equippable.slot)
+      slot.delete(item.name);
+      item.equippable.equipped = false;
+    }
+  }
+
   use(slot) {
     return this.#slots.get(slot).entries().next().value[1];
+  }
+
+  has(item) {
+    this.#slots.get(item.slot).has(item.name);
   }
 }
 
@@ -191,6 +235,11 @@ class Entity {
     sheet.actions.forEach(a => {
       this.#actions.set(a, actions.get(a)(this));
     });
+
+    if (sheet.nat_weapon) {
+      this.#inventory.add(sheet.nat_weapon);
+      this.#gear.equip(sheet.nat_weapon);
+    }
   }
 
   get name() {

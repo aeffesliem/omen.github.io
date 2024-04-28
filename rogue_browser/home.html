@@ -9,7 +9,39 @@
     <!-- styles -->
     <link rel="stylesheet" type="text/css" href="styles/home.css">
 
-    <!-- templates -->
+    <!-- pause menu modal -->
+      <div id="display-grid" style="display: none">
+        <div id="inventory-menu">
+          <div id="inventory-header">
+            <span>Holding: <span id="inventory-size">0</span></span>
+          </div>
+          <div id="inventory-contents" ondrop="document.equipDrop(event)" ondragover="document.equipOver(event)"></div>
+        </div>
+        <div id="gear-menu">
+          <h1>Gear</h1>
+          <table>
+            <tr id="weapon-row">
+              <td>Weapon:</td>
+              <td class="drop-zone gear" ondragover="document.equipOver(event)" ondrop="document.equipDrop(event)"></td>
+            </tr>
+            <tr id="helment-row">
+              <td>Helm:</td>
+              <td class="drop-zone gear" ondragover="document.equipOver(event)" ondrop="document.equipDrop(event)"></td>
+            </tr>
+            <tr id="chest-row">
+              <td>Chest:</td>
+              <td class="drop-zone gear" ondragover="document.equipOver(event)" ondrop="document.equipDrop(event)"></td>
+            </tr>
+            <tr id="hands-row">
+              <td>Hands:</td>
+              <td class="drop-zone gear" ondragover="document.equipOver(event)" ondrop="document.equipDrop(event)"></td>
+            </tr>
+          </table>
+        </div>
+        <div id="stats-menu">
+          <h1>Stats</h1>
+        </div>
+      </div>
 
     <!-- data modules -->
     <script type="module" src="./data/schemas.mjs"></script>
@@ -45,6 +77,8 @@
 
       window.onload = () => {
         game.initialize();
+        document.equipOver = game.equipOver;
+        document.equipDrop = game.equipDrop;
       }
     </script>
   </body>
